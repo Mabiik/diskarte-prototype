@@ -245,24 +245,25 @@ html, body {
 @media (max-width: 960px) {
   .stage { grid-template-columns: 1fr; }
   .sidebar { display: none; }
-  .canvas { 
-    position: relative; 
-    padding: 20px 0; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
+  .canvas {
+    position: relative;
+    padding: 20px 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     min-height: 100vh;
   }
   .device {
-    width: auto;
-    height: calc(100svh - 180px); /* enough room for nav bar + gap */
-    max-height: 844px;
-    aspect-ratio: 390 / 844;
-    max-width: calc(100vw - 32px);
-    margin: 16px auto 80px; /* 80px bottom pushes it up away from the nav */
+    width: 390px;
+    height: 844px;
+    transform-origin: top center;
+    transform: scale(var(--device-scale, 0.75));
+    margin: 0 auto;
+    margin-bottom: calc((var(--device-scale, 0.75) - 1) * 844px + 80px);
   }
   .mobile-nav { display: flex; }
 }
+
 .screen-top { display: flex; align-items: center; gap: 12px; padding: 8px 0 18px; }
 .back-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--anino); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
 .back-btn:hover { background: var(--anino-2); }

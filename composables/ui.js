@@ -16,3 +16,16 @@ export function showToast(message) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toastContainer.classList.remove('show'), 2200);
 }
+
+function updateDeviceScale() {
+  if (window.innerWidth <= 960) {
+    const availableHeight = window.innerHeight - 180;
+    const scale = Math.min(availableHeight / 844, 1);
+    document.documentElement.style.setProperty('--device-scale', scale.toFixed(3));
+  } else {
+    document.documentElement.style.removeProperty('--device-scale');
+  }
+}
+
+updateDeviceScale();
+window.addEventListener('resize', updateDeviceScale);
