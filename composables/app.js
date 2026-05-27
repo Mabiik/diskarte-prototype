@@ -2,6 +2,86 @@ import { state, categoryEmojis } from './state.js';
 import { initTabBars } from '../components/tabBar.js';
 import { formatCurrency, showToast } from './ui.js';
 
+const mobileNavScreens = [
+  { id: 'welcome', label: '01 Welcome' },
+  { id: 'login', label: '02 Sign In' },
+  { id: 'dashboard', label: '03 Dashboard' },
+  { id: 'add', label: '04 Add Transaction' },
+  { id: 'txn-detail', label: '05 Transaction Detail' },
+  { id: 'emergency', label: '06 Emergency Fund' },
+  { id: 'accounts', label: '07 Accounts' },
+  { id: 'account-detail', label: '08 Account Detail' },
+  { id: 'insights', label: '09 Insights' },
+  { id: 'utang', label: '10 Utang Tracker' },
+  { id: 'subscriptions', label: '11 Subscriptions' },
+  { id: 'notifications', label: '12 Notifications' },
+  { id: 'more', label: '13 More / Profile' },
+  { id: 'pro', label: '14 Diskarte Pro' },
+];
+
+function getMobileNavEntry(name) {
+  return mobileNavScreens.find((item) => item.id === name) || { label: '' };
+}
+
+function updateMobileNav(name) {
+  const current = getMobileNavEntry(name);
+  const currentEl = document.getElementById('mobile-nav-current');
+  if (currentEl) {
+    currentEl.textContent = current.label;
+  }
+
+  const dropdown = document.getElementById('mobile-nav-dropdown');
+  if (dropdown) {
+    dropdown.innerHTML = mobileNavScreens
+      .map(
+        (item) => `
+          <button type="button" class="mobile-nav-item${item.id === name ? ' active' : ''}" data-go="${item.id}">
+            ${item.label}
+          </button>
+        `,
+      )
+      .join('');
+  }
+}
+
+function getCurrentMobileIndex() {
+  const activeScreen = document.querySelector('.screen.active');
+  const currentId = activeScreen?.id?.replace('screen-', '') || 'dashboard';
+  return mobileNavScreens.findIndex((item) => item.id === currentId);
+}
+
+function navigateMobileNav(direction) {
+  const currentIndex = getCurrentMobileIndex();
+  if (currentIndex === -1) {
+    show('dashboard');
+    return;
+  }
+
+  let nextIndex = currentIndex;
+  if (direction === 'next') {
+    nextIndex = currentIndex === mobileNavScreens.length - 1 ? 0 : currentIndex + 1;
+  } else if (direction === 'prev') {
+    nextIndex = currentIndex === 0 ? mobileNavScreens.length - 1 : currentIndex - 1;
+  }
+
+  show(mobileNavScreens[nextIndex].id);
+}
+
+function toggleMobileDropdown() {
+  const dropdown = document.getElementById('mobile-nav-dropdown');
+  if (!dropdown) {
+    return;
+  }
+  dropdown.classList.toggle('show');
+}
+
+function closeMobileDropdown() {
+  const dropdown = document.getElementById('mobile-nav-dropdown');
+  if (dropdown) {
+    dropdown.classList.remove('show');
+  }
+}
+
 function show(name) {
   document.querySelectorAll('.screen').forEach((screen) => screen.classList.remove('active'));
   const target = document.getElementById(`screen-${name}`);
@@ -18,6 +98,9 @@ function show(name) {
   if (body) {
     body.scrollTop = 0;
   }
+
+  updateMobileNav(name);
+  closeMobileDropdown();
 
   if (name === 'add') {
     state.amountInput = '';
@@ -86,10 +169,39 @@ function bindGlobalFunctions() {
   window.deleteTransaction = deleteTransaction;
   window.openAccountDetail = openAccountDetail;
   window.openTransactionDetail = openTransactionDetail;
+  window.showToast = showToast;
 }
 
 function attachEventListeners() {
   document.body.addEventListener('click', (event) => {
+    const prevButton = event.target.closest('#mobile-nav-prev');
+    if (prevButton) {
+      event.preventDefault();
+      navigateMobileNav('prev');
+      return;
+    }
+
+    const nextButton = event.target.closest('#mobile-nav-next');
+    if (nextButton) {
+      event.preventDefault();
+      navigateMobileNav('next');
+      return;
+    }
+
+    const currentButton = event.target.closest('#mobile-nav-current');
+    if (currentButton) {
+      event.preventDefault();
+      toggleMobileDropdown();
+      return;
+    }
+
+    const dropdownItem = event.target.closest('.mobile-nav-item');
+    if (dropdownItem) {
+      event.preventDefault();
+      show(dropdownItem.dataset.go);
+      return;
+    }
+
     const goElement = event.target.closest('[data-go]');
     if (goElement) {
       event.preventDefault();
@@ -100,6 +212,11 @@ function attachEventListeners() {
     const thumb = event.target.closest('.thumb');
     if (thumb && thumb.dataset.screen) {
       show(thumb.dataset.screen);
+      return;
+    }
+
+    if (!event.target.closest('#mobile-nav')) {
+      closeMobileDropdown();
     }
   });
 
