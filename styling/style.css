@@ -246,7 +246,7 @@ html, body {
   .stage { grid-template-columns: 1fr; }
   .sidebar { display: none; }
   .canvas { position: relative; padding: 20px 0; flex-direction: column; align-items: center; }
-  .device { width: min(320px, calc(100vw - 32px)); aspect-ratio: 390 / 844; height: auto; margin: 0 auto 16px; }
+  .device { width: min(320px, calc(100vw - 32px)); aspect-ratio: 390 / 844; height: auto; margin: 0 auto 32px; }
   .mobile-nav { display: flex; }
 }
 
