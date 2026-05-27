@@ -1,6 +1,6 @@
 # Diskarte Prototype
 
-> This repository contains a small interactive HTML prototype for a personal finance app called Diskarte.
+This repository contains a small interactive HTML prototype for a personal finance app called Diskarte.
 
 ## Purpose
 
