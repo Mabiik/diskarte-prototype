@@ -243,25 +243,36 @@ html, body {
 }
 
 @media (max-width: 960px) {
-  .stage { grid-template-columns: 1fr; }
-  .sidebar { display: none; }
+  .stage { 
+    grid-template-columns: 1fr; 
+  }
+  .sidebar { 
+    display: none; 
+  }
   .canvas {
+    display: flex; 
     position: relative;
     padding: 20px 0;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden; 
   }
   .device {
     width: 390px;
     height: 844px;
-    transform-origin: top center;
+    
+   
+    transform-origin: center center;
     transform: scale(var(--device-scale, 0.75));
-    margin: 0 auto;
-    margin-bottom: calc((var(--device-scale, 0.75) - 1) * 844px + 80px);
+    
+    margin: 0; 
   }
-  .mobile-nav { display: flex; }
+  .mobile-nav { 
+    display: flex; 
+  }
 }
 
 .screen-top { display: flex; align-items: center; gap: 12px; padding: 8px 0 18px; }
