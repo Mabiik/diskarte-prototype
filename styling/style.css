@@ -243,35 +243,39 @@ html, body {
 }
 
 @media (max-width: 960px) {
-  .stage { 
-    grid-template-columns: 1fr; 
+  .stage {
+    grid-template-columns: 1fr;
   }
-  .sidebar { 
-    display: none; 
+
+  .sidebar {
+    display: none;
   }
+
   .canvas {
-    display: flex; 
-    position: relative;
-    padding: 20px 0;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     box-sizing: border-box;
-    overflow: hidden; 
+    padding: 20px 0 100px;
+    overflow: visible;
   }
+
   .device {
     width: 390px;
     height: 844px;
-    
-   
-    transform-origin: center center;
+    transform-origin: top center;
     transform: scale(var(--device-scale, 0.75));
-    
-    margin: 0; 
+    margin: 0;
   }
-  .mobile-nav { 
-    display: flex; 
+
+  .mobile-nav {
+    display: flex;
+  }
+
+  .mobile-nav-dropdown:not(.show) {
+    pointer-events: none;
   }
 }
 

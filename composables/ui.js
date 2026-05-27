@@ -18,24 +18,23 @@ export function showToast(message) {
 }
 
 function updateDeviceScale() {
+  const device = document.getElementById('device');
   if (window.innerWidth <= 960) {
-    // 1. Calculate available height (Viewport height minus approx 220px for tabs/nav/padding)
-    const availableHeight = window.innerHeight - 220; 
+    const availableHeight = window.innerHeight - 220;
     const heightScale = availableHeight / 844;
-
-    // 2. Calculate available width (Viewport width minus 40px for side padding)
     const availableWidth = window.innerWidth - 40;
     const widthScale = availableWidth / 390;
-
-    // 3. Choose the stricter scale so it fits perfectly both ways, capped at 1
     const scale = Math.min(heightScale, widthScale, 1);
-    
-    // 4. Set a minimum scale limit (e.g., 0.4) so it doesn't shrink into oblivion
     const finalScale = Math.max(scale, 0.4);
 
+ 
+    const excessHeight = (1 - finalScale) * 844;
+
     document.documentElement.style.setProperty('--device-scale', finalScale.toFixed(3));
+    device.style.marginBottom = `-${excessHeight.toFixed(0)}px`;
   } else {
     document.documentElement.style.removeProperty('--device-scale');
+    device.style.marginBottom = '';
   }
 }
 updateDeviceScale();
