@@ -58,7 +58,7 @@ diskarte-prototype.html  # HTML shell and screen markup
 
 | File | Purpose |
 |------|---------|
-| `diskarte-prototype.html` | Main app shell containing all screen markup and DOM structure |
+| `index.html` | Main app shell containing all screen markup and DOM structure | 
 | `styling/style.css` | Complete app styling, CSS variables, theme definitions, and responsive design |
 | `main.js` | Entry point that imports and initializes the app |
 | `components/tabBar.js` | Reusable tab bar HTML generation and initialization logic |
