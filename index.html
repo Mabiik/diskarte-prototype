@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diskarte — Interactive Prototype v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styling/style.css">
+</head>
+<body>
+
+<div class="stage">
+  <aside class="sidebar">
+    <div class="sidebar-brand">Diskarte<span class="dot">.</span></div>
+    <div class="sidebar-label">PROTOTYPE v3 · INTERACTIVE</div>
+
+    <div class="sidebar-section-title">Onboarding</div>
+    <div class="thumb" data-screen="welcome"><div class="thumb-icon">01</div><div class="thumb-text">Welcome</div></div>
+    <div class="thumb" data-screen="login"><div class="thumb-icon">02</div><div class="thumb-text">Sign In</div></div>
+
+    <div class="sidebar-section-title">Main App</div>
+    <div class="thumb active" data-screen="dashboard"><div class="thumb-icon">03</div><div class="thumb-text">Dashboard</div></div>
+    <div class="thumb" data-screen="add"><div class="thumb-icon">04</div><div class="thumb-text">Add Transaction</div></div>
+    <div class="thumb" data-screen="txn-detail"><div class="thumb-icon">05</div><div class="thumb-text">Transaction Detail</div></div>
+    <div class="thumb" data-screen="emergency"><div class="thumb-icon">06</div><div class="thumb-text">Emergency Fund</div></div>
+    <div class="thumb" data-screen="accounts"><div class="thumb-icon">07</div><div class="thumb-text">Accounts</div></div>
+    <div class="thumb" data-screen="account-detail"><div class="thumb-icon">08</div><div class="thumb-text">Account Detail</div></div>
+    <div class="thumb" data-screen="insights"><div class="thumb-icon">09</div><div class="thumb-text">Insights · Charts</div></div>
+    <div class="thumb" data-screen="utang"><div class="thumb-icon">10</div><div class="thumb-text">Utang Tracker</div></div>
+    <div class="thumb" data-screen="subscriptions"><div class="thumb-icon">11</div><div class="thumb-text">Subscriptions</div></div>
+
+    <div class="sidebar-section-title">Side flows</div>
+    <div class="thumb" data-screen="notifications"><div class="thumb-icon">12</div><div class="thumb-text">Notifications</div></div>
+    <div class="thumb" data-screen="more"><div class="thumb-icon">13</div><div class="thumb-text">More / Profile</div></div>
+    <div class="thumb" data-screen="pro"><div class="thumb-icon">14</div><div class="thumb-text">Diskarte Pro</div></div>
+
+    <div class="help-card">
+      <strong>What's new in v3:</strong><br>
+      • Toast notifications now appear at the bottom (not behind the notch)<br>
+      • Tap any transaction → full detail view with delete<br>
+      • Tap any account → drill into its history<br>
+      • Subscriptions screen catches recurring bleed<br>
+      • Emergency Fund target now uses a real drag slider<br>
+      • Theme toggle in More actually flips dark ↔ light
+    </div>
+  </aside>
+
+  <div class="canvas">
+    <div class="device" id="device">
+
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-icons">
+          <svg viewBox="0 0 24 24"><path d="M2 17h2v3H2zM6 14h2v6H6zM10 11h2v9h-2zM14 8h2v12h-2zM18 4h2v16h-2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12.01 21.49L23.64 7c-.45-.34-4.93-4-11.64-4C5.28 3 .81 6.66.36 7l11.63 14.49.01.01.01-.01z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+        </div>
+      </div>
+
+      <div class="toast-container" id="toast"><div class="toast"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span id="toast-msg">Saved</span></div></div>
+
+      <div class="screen" id="screen-welcome">
+        <div class="welcome">
+          <div class="welcome-logo">Diskarte<span class="dot">.</span></div>
+          <div class="welcome-tagline">Diskarte sa pera mo.</div>
+          <div class="welcome-headline">An emergency fund<br>that knows how <span class="accent">broke</span> you are.</div>
+          <div class="welcome-sub">Built for Filipino freelancers, online workers, and anyone whose income doesn't arrive on the same date every month.</div>
+          <button class="cta-primary" data-go="login">Get Started</button>
+          <button class="cta-secondary" data-go="login">I already have an account</button>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-login">
+        <div class="login">
+          <div class="screen-top" style="padding-bottom: 28px;">
+            <div class="back-btn" data-go="welcome"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+          </div>
+          <div class="login-logo">Diskarte<span class="dot">.</span></div>
+          <div class="login-sub">Welcome back. Let's check the books.</div>
+          <div class="input-group"><label class="input-label">Email or Username</label><input class="input-field" type="email" value="jude@diskarte.app"></div>
+          <div class="input-group"><label class="input-label">Password</label><input class="input-field" type="password" value="••••••••"></div>
+          <div class="forgot-link">Forgot password?</div>
+          <button class="cta-primary" style="max-width: 100%;" data-go="dashboard">Sign In</button>
+          <div class="divider"><span>OR CONTINUE WITH</span></div>
+          <button class="social-btn" data-go="dashboard">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            Continue with Google
+          </button>
+          <div class="signup-prompt">Don't have an account? <a data-go="welcome">Sign up</a></div>
+        </div>
+      </div>
+
+      <div class="screen active" id="screen-dashboard">
+        <div class="screen-body">
+          <div class="header-row">
+            <div>
+              <div class="brand-mark">Diskarte<span class="dot">.</span></div>
+              <div class="greeting">Magandang umaga, Jude</div>
+            </div>
+            <div class="header-actions">
+              <div class="icon-btn" data-go="notifications">
+                <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                <span class="badge"></span>
+              </div>
+              <div class="icon-btn" onclick="togglePrivacy()">
+                <svg viewBox="0 0 24 24" id="eye-icon"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="net-worth-block peek-target">
+            <div class="nw-label">Net Worth</div>
+            <div class="nw-value" id="nw-value">₱ 218,420</div>
+            <div class="nw-trend" id="nw-trend">↑ 4.2% this month</div>
+          </div>
+
+          <div class="card feature peek-target" data-go="emergency">
+            <div class="card-head"><div class="card-title">Emergency Fund</div><div class="card-meta">68%</div></div>
+            <div class="progress-bar"><div class="progress-fill" style="width: 68%"></div></div>
+            <div class="card-foot"><span class="blurr">4 of 6 months covered</span><span>Tap to manage →</span></div>
+          </div>
+
+          <div class="stat-row">
+            <div class="card stat-card no-tap peek-target">
+              <div class="nw-label">Daily Avg</div>
+              <div class="stat-val">₱ 820</div>
+              <div class="stat-sub warn">↑ above target</div>
+            </div>
+            <div class="card stat-card no-tap peek-target">
+              <div class="nw-label">This Month</div>
+              <div class="stat-val" id="month-spent">₱ 24,580</div>
+              <div class="stat-sub">Spent so far</div>
+            </div>
+          </div>
+
+          <div class="section-label"><span>Recent Transactions</span><span class="link" data-go="insights">See all →</span></div>
+          <div class="card no-tap" style="padding: 6px 16px;">
+            <div class="txn-list" id="txn-list"></div>
+          </div>
+        </div>
+        <div class="tab-bar"></div>
+      </div>
+
+      <div class="screen modal" id="screen-add">
+        <div class="screen-body" style="padding-bottom: 30px;">
+          <div class="screen-top">
+            <div class="back-btn" data-go="dashboard"><svg viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg></div>
+            <div class="screen-title">New Transaction</div>
+            <div class="screen-action" onclick="saveTransaction()">Save</div>
+          </div>
+          <div class="tg-segment" id="type-segment">
+            <div class="seg on" data-type="expense">Expense</div>
+            <div class="seg income" data-type="income">Income</div>
+            <div class="seg" data-type="transfer">Transfer</div>
+          </div>
+          <div class="amount-display">
+            <div class="amount-label">Amount</div>
+            <div class="amount-val zero" id="amount-display"><span class="currency">₱</span>0</div>
+          </div>
+          <div class="keypad-wrap">
+            <div class="keypad">
+              <button class="key" data-key="1">1</button>
+              <button class="key" data-key="2">2</button>
+              <button class="key" data-key="3">3</button>
+              <button class="key" data-key="4">4</button>
+              <button class="key" data-key="5">5</button>
+              <button class="key" data-key="6">6</button>
+              <button class="key" data-key="7">7</button>
+              <button class="key" data-key="8">8</button>
+              <button class="key" data-key="9">9</button>
+              <button class="key action" data-key="clear">C</button>
+              <button class="key" data-key="0">0</button>
+              <button class="key action" data-key="back"><svg viewBox="0 0 24 24"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM18 9l-6 6M12 9l6 6"/></svg></button>
+            </div>
+          </div>
+          <div class="section-label">Category</div>
+          <div class="category-grid" id="cat-grid">
+            <div class="cat-item on" data-cat="Food"><span class="cat-emoji">🍔</span><span class="cat-label">Food</span></div>
+            <div class="cat-item" data-cat="Transport"><span class="cat-emoji">🛺</span><span class="cat-label">Transport</span></div>
+            <div class="cat-item" data-cat="Bills"><span class="cat-emoji">🏠</span><span class="cat-label">Bills</span></div>
+            <div class="cat-item" data-cat="Shopping"><span class="cat-emoji">🛍️</span><span class="cat-label">Shopping</span></div>
+            <div class="cat-item" data-cat="Health"><span class="cat-emoji">💊</span><span class="cat-label">Health</span></div>
+            <div class="cat-item" data-cat="Leisure"><span class="cat-emoji">🎬</span><span class="cat-label">Leisure</span></div>
+            <div class="cat-item" data-cat="Learn"><span class="cat-emoji">📚</span><span class="cat-label">Learn</span></div>
+            <div class="cat-item" data-cat="Other"><span class="cat-emoji">⋯</span><span class="cat-label">More</span></div>
+          </div>
+          <div class="field"><div><span class="field-label">Account</span><span class="field-value">BPI Credit Card</span></div><div class="field-chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div></div>
+          <div class="field"><div><span class="field-label">Date</span><span class="field-value">Today, May 14</span></div><div class="field-chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div></div>
+          <div class="field"><div><span class="field-label">Note (optional)</span><span class="field-value" style="color: var(--text-dim);">Add a note...</span></div></div>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-txn-detail">
+        <div class="screen-body">
+          <div class="screen-top">
+            <div class="back-btn" data-go="dashboard"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div class="screen-title">Transaction Details</div>
+          </div>
+          <div class="txn-hero">
+            <div class="txn-hero-icon" id="txn-d-icon">🍔</div>
+            <div class="txn-hero-name" id="txn-d-name">Jollibee</div>
+            <div class="txn-hero-cat" id="txn-d-cat">Food · BPI Credit Card</div>
+            <div class="txn-hero-amt exp" id="txn-d-amt">−₱ 285</div>
+          </div>
+          <div class="card no-tap">
+            <div class="txn-detail-row"><span class="txn-detail-label">Date</span><span class="txn-detail-val">Today, May 14 · 12:42 PM</span></div>
+            <div class="txn-detail-row"><span class="txn-detail-label">Account</span><span class="txn-detail-val">BPI Credit Card</span></div>
+            <div class="txn-detail-row"><span class="txn-detail-label">Category</span><span class="txn-detail-val">Food</span></div>
+            <div class="txn-detail-row"><span class="txn-detail-label">Reference</span><span class="txn-detail-val" style="font-family: var(--font-mono); font-size: 12px;">TXN-2026051401</span></div>
+            <div class="txn-detail-row"><span class="txn-detail-label">Note</span><span class="txn-detail-val" style="color: var(--text-dim);">Lunch with team</span></div>
+          </div>
+          <div class="action-row">
+            <button class="action-btn" onclick="showToast('Edit mode opened')">✎ Edit</button>
+            <button class="action-btn danger" onclick="deleteTransaction()">🗑 Delete</button>
+          </div>
+          <div class="tip-card">
+            <div class="tip-head">◆ Spending pattern</div>
+            <div class="tip-text">You've spent ₱2,840 on Food at Jollibee this month across 9 visits. That's about 12% of your food budget.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-emergency">
+        <div class="screen-body">
+          <div class="screen-top">
+            <div class="back-btn" data-go="dashboard"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div class="screen-title">Emergency Fund</div>
+          </div>
+          <div class="ef-hero">
+            <div class="ef-ring">
+              <svg viewBox="0 0 100 100">
+                <circle class="ring-bg" cx="50" cy="50" r="42" fill="none" stroke-width="7"/>
+                <circle class="ring-fg" id="ef-ring" cx="50" cy="50" r="42" fill="none" stroke-width="7" stroke-dasharray="263.89" stroke-dashoffset="84.45"/>
+              </svg>
+              <div class="ef-ring-center">
+                <div class="ef-pct" id="ef-pct">68%</div>
+                <div class="ef-pct-label">covered</div>
+              </div>
+            </div>
+            <div class="ef-headline" id="ef-headline">4 of 6 months saved</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;" id="ef-progress">₱ 167,200 of ₱ 246,000 target</div>
+          </div>
+
+          <div class="ef-stats">
+            <div class="card no-tap">
+              <div class="nw-label">Monthly Need</div>
+              <div class="stat-val" style="font-size: 18px; margin-top: 4px;">₱ 41,000</div>
+              <div class="stat-sub">Based on daily avg × 30</div>
+            </div>
+            <div class="card no-tap">
+              <div class="nw-label">Months to Goal</div>
+              <div class="stat-val" id="ef-months-to-go" style="font-size: 18px; margin-top: 4px;">3.8</div>
+              <div class="stat-sub">At current pace</div>
+            </div>
+          </div>
+
+          <div class="slider-card">
+            <div class="slider-head">
+              <span class="slider-label">Adjust target</span>
+              <span class="slider-val"><span id="ef-target-val">6</span><span class="unit">months</span></span>
+            </div>
+            <input type="range" min="1" max="12" value="6" class="slider-input" id="ef-slider">
+            <div class="slider-ticks"><span>1</span><span>3</span><span>6</span><span>9</span><span>12</span></div>
+          </div>
+
+          <div class="tip-card">
+            <div class="tip-head">◆ The honest math</div>
+            <div class="tip-text" id="ef-tip">Your target updates automatically as your spending changes. Right now you spend an average of ₱820 per day, so 6 months of cushion means ₱246,000. If your spending drops, the target drops with it.</div>
+          </div>
+        </div>
+        <div class="tab-bar"></div>
+      </div>
+
+      <div class="screen" id="screen-accounts">
+        <div class="screen-body">
+          <div class="screen-top">
+            <div class="back-btn" data-go="dashboard"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div class="screen-title">Accounts</div>
+          </div>
+          <div class="net-worth-block">
+            <div class="nw-label">Total Across All Accounts</div>
+            <div class="nw-value">₱ 218,420</div>
+            <div class="nw-trend">5 accounts · 1 credit card</div>
+          </div>
+          <div class="account-group">Cash & Wallets</div>
+          <div class="acct-item" onclick="openAccountDetail('GCash', 'E-Wallet', '8,420', 'G', '#B8FF3D')"><div class="acct-icon" style="background: rgba(184,255,61,0.1); color: var(--kalamansi);">G</div><div class="acct-body"><div class="acct-name">GCash</div><div class="acct-type">E-Wallet</div></div><div class="acct-amt">₱ 8,420</div></div>
+          <div class="acct-item" onclick="openAccountDetail('Maya', 'E-Wallet', '12,500', 'M', '#FFB84D')"><div class="acct-icon" style="background: rgba(255,184,77,0.1); color: var(--tanglaw);">M</div><div class="acct-body"><div class="acct-name">Maya</div><div class="acct-type">E-Wallet</div></div><div class="acct-amt">₱ 12,500</div></div>
+          <div class="acct-item" onclick="openAccountDetail('Cash on Hand', 'Physical', '10,000', '💵', '')"><div class="acct-icon">💵</div><div class="acct-body"><div class="acct-name">Cash on Hand</div><div class="acct-type">Physical</div></div><div class="acct-amt">₱ 10,000</div></div>
+          <div class="account-group">Bank Accounts</div>
+          <div class="acct-item" onclick="openAccountDetail('BPI Savings', 'Bank · ••••4521', '142,300', 'B', '#E53935')"><div class="acct-icon" style="background: rgba(229, 57, 53, 0.1); color: #E53935;">B</div><div class="acct-body"><div class="acct-name">BPI Savings</div><div class="acct-type">Bank · ••••4521</div></div><div class="acct-amt">₱ 142,300</div></div>
+          <div class="acct-item" onclick="openAccountDetail('GSave', 'Digital Bank', '45,200', 'G', '#B8FF3D')"><div class="acct-icon" style="background: rgba(184,255,61,0.1); color: var(--kalamansi);">G</div><div class="acct-body"><div class="acct-name">GSave</div><div class="acct-type">Digital Bank</div></div><div class="acct-amt">₱ 45,200</div></div>
+          <div class="account-group">Credit Cards</div>
+          <div class="acct-item" onclick="openAccountDetail('BPI Credit Card', 'Due May 28', '-4,250', 'C', '#FF5C5C')"><div class="acct-icon" style="background: rgba(255, 92, 92, 0.1); color: var(--apoy);">C</div><div class="acct-body"><div class="acct-name">BPI Credit Card</div><div class="acct-type">Due May 28 · ₱ 4,250 owed</div></div><div class="acct-amt" style="color: var(--apoy);">−₱ 4,250</div></div>
+          <button class="add-account-btn">+ Add Account</button>
+        </div>
+        <div class="tab-bar"></div>
+      </div>
+
+      <div class="screen" id="screen-account-detail">
+        <div class="screen-body">
+          <div class="screen-top">
+            <div class="back-btn" data-go="accounts"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div class="screen-title" id="ad-title">BPI Savings</div>
+            <div class="screen-action">⋯</div>
+          </div>
+          <div class="account-hero">
+            <div class="account-hero-icon" id="ad-icon" style="background: rgba(229, 57, 53, 0.1); color: #E53935;">B</div>
+            <div class="account-hero-name" id="ad-name">BPI Savings</div>
+            <div class="account-hero-num" id="ad-num">Bank · ••••4521</div>
+            <div class="nw-label">Current Balance</div>
+            <div class="account-hero-amt" id="ad-amt">₱ 142,300</div>
+          </div>
+          <div class="acct-stat-row">
+            <div class="card no-tap"><div class="nw-label">Income (mo)</div><div class="stat-val" style="font-size: 18px; color: var(--kalamansi);">+₱ 38,500</div></div>
+            <div class="card no-tap"><div class="nw-label">Outflow (mo)</div><div class="stat-val" style="font-size: 18px;">−₱ 12,200</div></div>
+          </div>
+          <div class="section-label"><span>Recent Activity</span><span class="link">Filter</span></div>
+          <div class="card no-tap" style="padding: 6px 16px;">
+            <div class="txn-list">
+              <div class="txn-item"><div class="txn-icon">💼</div><div class="txn-body"><div class="txn-name">Upwork Payment</div><div class="txn-meta">Income · Yesterday</div></div><div class="txn-amount inc">+₱ 18,500</div></div>
+              <div class="txn-item"><div class="txn-icon">🏦</div><div class="txn-body"><div class="txn-name">Transfer to GSave</div><div class="txn-meta">Transfer · May 10</div></div><div class="txn-amount exp">−₱ 10,000</div></div>
+              <div class="txn-item"><div class="txn-icon">💼</div><div class="txn-body"><div class="txn-name">Local Client Invoice</div><div class="txn-meta">Income · May 8</div></div><div class="txn-amount inc">+₱ 20,000</div></div>
+              <div class="txn-item"><div class="txn-icon">🏠</div><div class="txn-body"><div class="txn-name">Rent</div><div class="txn-meta">Bills · May 1</div></div><div class="txn-amount exp">−₱ 12,000</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-insights">
+        <div class="screen-body">
+          <div class="screen-top">
+            <div class="back-btn" data-go="dashboard"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div class="screen-title">Insights</div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-head">
+              <div>
+                <div class="chart-title">Spending This Week</div>
+                <div style="font-family: var(--font-mono); font-size: 22px; font-weight: 500; margin-top: 6px; color: var(--text);">₱ 5,740</div>
+                <div style="font-size: 11px; color: var(--apoy); margin-top: 2px;">↑ 12% vs last week</div>
+              </div>
+              <div class="chart-period">7 days ▾</div>
+            </div>
+            <div class="bar-chart">
+              <div class="bar" style="height: 32%;"><div class="bar-label">Mon</div></div>
+              <div class="bar" style="height: 56%;"><div class="bar-label">Tue</div></div>
+              <div class="bar" style="height: 40%;"><div class="bar-label">Wed</div></div>
+              <div class="bar" style="height: 72%;"><div class="bar-label">Thu</div></div>
+              <div class="bar peak" style="height: 95%;"><div class="bar-label">Fri</div></div>
+              <div class="bar" style="height: 60%;"><div class="bar-label">Sat</div></div>
+              <div class="bar" style="height: 28%;"><div class="bar-label">Sun</div></div>
+            </div>
+            <div class="chart-stats">
+              <div class="chart-stat"><div class="l">Avg/Day</div><div class="v">₱ 820</div></div>
+              <div class="chart-stat"><div class="l">Highest</div><div class="v">₱ 1,420</div></div>
+              <div class="chart-stat"><div class="l">Lowest</div><div class="v">₱ 320</div></div>
+            </div>
+          </div>
+          <div class="section-label"><span>By Category</span></div>
+          <div class="card no-tap" style="padding: 8px 16px;">
+            <div class="cat-row"><div class="cat-row-icon">🍔</div><div class="cat-row-body"><div class="cat-row-name">Food</div><div class="cat-row-meter"><div class="cat-row-meter-fill" style="width: 100%;"></div></div></div><div class="cat-row-amt">₱ 8,420</div></div>
+            <div class="cat-row"><div class="cat-row-icon">🛺</div><div class="cat-row-body"><div class="cat-row-name">Transport</div><div class="cat-row-meter"><div class="cat-row-meter-fill" style="width: 56%;"></div></div></div><div class="cat-row-amt">₱ 4,720</div></div>
+            <div class="cat-row"><div class="cat-row-icon">🏠</div><div class="cat-row-body"><div class="cat-row-name">Bills</div><div class="cat-row-meter"><div class="cat-row-meter-fill" style="width: 84%;"></div></div></div><div class="cat-row-amt">₱ 7,080</div></div>
+            <div class="cat-row"><div class="cat-row-icon">🛍️</div><div class="cat-row-body"><div class="cat-row-name">Shopping</div><div class="cat-row-meter"><div class="cat-row-meter-fill" style="width: 38%;"></div></div></div><div class="cat-row-amt">₱ 3,200</div></div>
+            <div class="cat-row"><div class="cat-row-icon">🎬</div><div class="cat-row-body"><div class="cat-row-name">Leisure</div><div class="cat-row-meter"><div class="cat-row-meter-fill" style="width: 14%;"></div></div></div><div class="cat-row-amt">₱ 1,160</div></div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-head">◆ Quiet observation</div>
+            <div class="tip-text">Your Friday spending is consistently the highest day of the week. It's not bad, but if you wanted to cut ₱5,000 a month, that's where the leak is.</div>
+          </div>
+        </div>
+        <div class="tab-bar"></div>
+      </div>
+
+      <div class="screen" id="screen-utang">
+        <div class="screen-body">
+          <div class="screen-top">
+            <div class="back-btn" data-go="dashboard"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div class="screen-title">Utang Tracker</div>
+            <div class="screen-action">+ Add</div>
+          </div>
+          <div class="utang-toggle">
+            <div class="utang-tab on"><div class="l">They owe you</div><div class="v">₱ 2,500</div></div>
+            <div class="utang-tab danger"><div class="l">You owe them</div><div class="v">₱ 850</div></div>
+          </div>
+          <div class="section-label">Pending</div>
+          <div class="utang-item"><div class="utang-avatar" style="background: rgba(184,255,61,0.15); color: var(--kalamansi);">MR</div><div class="utang-body"><div class="utang-name">Kuya Marco Reyes</div><div class="utang-due">Borrowed May 5 · Due May 20</div></div><div class="utang-amt">₱ 1,500</div></div>
+          <div class="utang-item"><div class="utang-avatar" style="background: rgba(255,184,77,0.15); color: var(--tanglaw);">AC</div><div class="utang-body"><div class="utang-name">Ate Carla</div><div class="utang-due overdue">Borrowed Apr 28 · 4 days overdue</div></div><div class="utang-amt">₱ 1,000</div></div>
+          <div class="section-label">You Owe</div>
+          <div class="utang-item"><div class="utang-avatar" style="background: rgba(255,92,92,0.15); color: var(--apoy);">PB</div><div class="utang-body"><div class="utang-name">Pancit ni Boss (lunch)</div><div class="utang-due">Due May 18</div></div><div class="utang-amt">−₱ 350</div></div>
+          <div class="utang-item"><div class="utang-avatar" style="background: rgba(255,92,92,0.15); color: var(--apoy);">DJ</div><div class="utang-body"><div class="utang-name">Dad (Grab fare)</div><div class="utang-due">No due date</div></div><div class="utang-amt">−₱ 500</div></div>
+          <div class="tip-card" style="margin-top: 14px;">
+            <div class="tip-head">◆ Friendship saver</div>
+            <div class="tip-text">No more "wait, did Kuya pay me back na ba?" Diskarte keeps the receipts so you don't have to remember.</div>
+          </div>
+        </div>
+        <div class="tab-bar"></div>
+      </div>
+
+      <div class="screen" id="screen-subscriptions">
+        <div class="screen-body">
+          <div class="screen-top">
+            <div class="back-btn" data-go="dashboard"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div class="screen-title">Subscriptions</div>
+            <div class="screen-action">+ Add</div>
+          </div>
+          <div class="sub-summary">
+            <div class="sub-summary-label">Monthly Bleed</div>
+            <div class="sub-summary-val">₱ 1,847</div>
+            <div class="sub-summary-sub">Across 7 active subscriptions · ₱ 22,164/year</div>
+          </div>
+          <div class="section-label">Active</div>
+          <div class="sub-item"><div class="sub-icon" style="background: #E50914; color: white;">N</div><div class="sub-body"><div class="sub-name">Netflix</div><div class="sub-renew">Renews May 28 · GCash</div></div><div class="sub-amt"><div class="sub-amt-val">₱ 549</div><div class="sub-amt-freq">monthly</div></div></div>
+          <div class="sub-item"><div class="sub-icon" style="background: #1DB954; color: white;">S</div><div class="sub-body"><div class="sub-name">Spotify Premium</div><div class="sub-renew">Renews May 22 · BPI Credit</div></div><div class="sub-amt"><div class="sub-amt-val">₱ 149</div><div class="sub-amt-freq">monthly</div></div></div>
+          <div class="sub-item"><div class="sub-icon" style="background: #000; color: white; border: 1px solid var(--border-2);">C</div><div class="sub-body"><div class="sub-name">ChatGPT Plus</div><div class="sub-renew">Renews Jun 3 · BPI Credit</div></div><div class="sub-amt"><div class="sub-amt-val">₱ 1,150</div><div class="sub-amt-freq">monthly</div></div></div>
+          <div class="sub-item"><div class="sub-icon" style="background: #FF7262; color: white;">F</div><div class="sub-body"><div class="sub-name">Figma Pro</div><div class="sub-renew">Renews Jun 12 · BPI Credit</div></div><div class="sub-amt"><div class="sub-amt-val">₱ 720</div><div class="sub-amt-freq">monthly</div></div></div>
+          <div class="sub-item"><div class="sub-icon" style="background: #007AFF; color: white;">i</div><div class="sub-body"><div class="sub-name">iCloud+ 200GB</div><div class="sub-renew">Renews May 25 · GCash</div></div><div class="sub-amt"><div class="sub-amt-val">₱ 49</div><div class="sub-amt-freq">monthly</div></div></div>
+          <div class="sub-item"><div class="sub-icon" style="background: #5A45FF; color: white;">G</div><div class="sub-body"><div class="sub-name">Globe Postpaid</div><div class="sub-renew">Renews Jun 1 · Auto-debit</div></div><div class="sub-amt"><div class="sub-amt-val">₱ 999</div><div class="sub-amt-freq">monthly</div></div></div>
+          <div class="sub-item"><div class="sub-icon" style="background: #FF6B00; color: white;">A</div><div class="sub-body"><div class="sub-name">Adobe Creative Cloud</div><div class="sub-renew">Renews next month · Annual plan</div></div><div class="sub-amt"><div class="sub-amt-val">₱ 350</div><div class="sub-amt-freq">avg monthly</div></div></div>
+          <div class="tip-card" style="margin-top: 14px;">
+            <div class="tip-head">◆ The silent leak</div>
+            <div class="tip-text">If you canceled the bottom three, you'd save ₱13,176 per year. Diskarte flags subscriptions you haven't used in 30 days.</div>
+          </div>
+        </div>
+        <div class="tab-bar"></div>
+      </div>
+
+      <div class="screen" id="screen-notifications">
+        <div class="screen-body">
+          <div class="screen-top">
+            <div class="back-btn" data-go="dashboard"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div class="screen-title">Notifications</div>
+            <div class="screen-action">Mark all read</div>
+          </div>
+          <div class="section-label">Today</div>
+          <div class="notif-item unread"><div class="notif-dot"></div><div class="notif-body"><div class="notif-title">Daily spending alert</div><div class="notif-text">You spent ₱1,420 today, which is ₱600 above your daily average. Heads up before the weekend.</div><div class="notif-time">2 hours ago</div></div></div>
+          <div class="notif-item unread"><div class="notif-dot"></div><div class="notif-body"><div class="notif-title">BPI Credit Card due in 14 days</div><div class="notif-text">Statement balance is ₱4,250. Due date is May 28, 2026.</div><div class="notif-time">9:00 AM</div></div></div>
+          <div class="notif-item unread"><div class="notif-dot"></div><div class="notif-body"><div class="notif-title">Ate Carla's utang is overdue</div><div class="notif-text">She still owes you ₱1,000 since April 28. Maybe send a gentle reminder.</div><div class="notif-time">8:14 AM</div></div></div>
+          <div class="section-label">Earlier</div>
+          <div class="notif-item"><div class="notif-dot"></div><div class="notif-body"><div class="notif-title">You crossed 65% emergency fund</div><div class="notif-text">4 months out of 6 are now covered. Congrats, that's actual progress.</div><div class="notif-time">Yesterday</div></div></div>
+          <div class="notif-item"><div class="notif-dot"></div><div class="notif-body"><div class="notif-title">Upwork payment received</div><div class="notif-text">₱18,500 was added to BPI Savings. Auto-categorized as income.</div><div class="notif-time">Yesterday</div></div></div>
+          <div class="notif-item"><div class="notif-dot"></div><div class="notif-body"><div class="notif-title">Netflix charged ₱549</div><div class="notif-text">Recurring subscription detected. Tap to manage your subscriptions.</div><div class="notif-time">2 days ago</div></div></div>
+        </div>
+        <div class="tab-bar"></div>
+      </div>
+
+      <div class="screen" id="screen-more">
+        <div class="screen-body">
+          <div class="screen-top">
+            <div class="back-btn" data-go="dashboard"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div class="screen-title">More</div>
+          </div>
+          <div class="profile-card">
+            <div class="profile-avatar">J</div>
+            <div>
+              <div class="profile-name">Jude Poline Austria</div>
+              <div class="profile-email">jude@diskarte.app · Free Tier</div>
+            </div>
+          </div>
+          <div class="pro-card" data-go="pro">
+            <span class="pro-tag">DISKARTE PRO</span>
+            <div class="pro-headline">Unlock the full diskarte.</div>
+            <div class="pro-sub">Multi-month analytics, unlimited categories, CSV export, priority support.</div>
+            <button class="pro-cta" data-go="pro">Upgrade →</button>
+          </div>
+          <div class="section-label">Preferences</div>
+          <div class="menu-item">
+            <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <div class="menu-text">Privacy Mode</div>
+            <div class="menu-toggle" id="privacy-menu-toggle" onclick="togglePrivacy()"></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
+            <div class="menu-text">Light Theme</div>
+            <div class="menu-toggle" id="theme-menu-toggle" onclick="toggleTheme()"></div>
+          </div>
+          <div class="menu-item" data-go="subscriptions">
+            <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M21 4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM1 10h22"/></svg></div>
+            <div class="menu-text">Subscriptions</div>
+            <div class="menu-chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+          </div>
+          <div class="menu-item" data-go="utang">
+            <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div class="menu-text">Utang Tracker</div>
+            <div class="menu-chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+          </div>
+          <div class="menu-item" data-go="notifications">
+            <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+            <div class="menu-text">Notifications</div>
+            <div class="menu-chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></div>
+            <div class="menu-text">Export Data (CSV)</div>
+            <div class="menu-chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+          </div>
+          <div class="section-label">Account</div>
+          <div class="menu-item" data-go="welcome">
+            <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></div>
+            <div class="menu-text" style="color: var(--apoy);">Sign Out</div>
+          </div>
+        </div>
+        <div class="tab-bar"></div>
+      </div>
+
+      <div class="screen" id="screen-pro">
+        <div class="screen-body">
+          <div class="screen-top">
+            <div class="back-btn" data-go="more"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div class="screen-title">Diskarte Pro</div>
+          </div>
+          <div class="pro-hero">
+            <div class="pro-hero-icon">D.</div>
+            <div class="pro-hero-title">The full diskarte.</div>
+            <div class="pro-hero-sub">All core features stay free forever. Pro adds the extras you'll only need once your finances start scaling.</div>
+          </div>
+          <div class="section-label">What's included</div>
+          <div class="card no-tap">
+            <div class="feature-item"><div class="feature-check">✓</div><div><div class="feature-name">Multi-month analytics</div><div class="feature-desc">Track trends across 3, 6, or 12 months at a glance.</div></div></div>
+            <div class="feature-item"><div class="feature-check">✓</div><div><div class="feature-name">Unlimited custom categories</div><div class="feature-desc">Build categories that match your actual life, not generic ones.</div></div></div>
+            <div class="feature-item"><div class="feature-check">✓</div><div><div class="feature-name">CSV and PDF export</div><div class="feature-desc">Take your data anywhere, including to your accountant.</div></div></div>
+            <div class="feature-item"><div class="feature-check">✓</div><div><div class="feature-name">Priority support</div><div class="feature-desc">Real humans answer within hours instead of days.</div></div></div>
+            <div class="feature-item"><div class="feature-check">✓</div><div><div class="feature-name">Early access to new features</div><div class="feature-desc">Bill splitting, household sharing, savings buckets, and more.</div></div></div>
+          </div>
+          <div class="section-label">Pick a plan</div>
+          <div class="plan-row">
+            <div class="plan-card" data-plan="monthly"><div class="plan-period">Monthly</div><div class="plan-price">₱99</div><div class="plan-per">per month</div></div>
+            <div class="plan-card on" data-plan="yearly"><div class="savings">SAVE 17%</div><div class="plan-period">Yearly</div><div class="plan-price">₱999</div><div class="plan-per">per year</div></div>
+          </div>
+          <button class="cta-primary" style="max-width: 100%;" onclick="showToast('Welcome to Diskarte Pro 🎉')">Subscribe Now</button>
+          <div style="text-align: center; font-size: 11px; color: var(--text-dim); margin-top: 16px;">Cancel anytime. Your data is yours to keep.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>
