@@ -342,4 +342,5 @@ export function initApp() {
   renderAmount();
   bindGlobalFunctions();
   attachEventListeners();
+  show('welcome');
 }
